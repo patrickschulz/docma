@@ -13,7 +13,7 @@ local util = require "util"
 local entry = require "entry"
 
 local databasepaths = {
-    "/home/pkurth/.knowledge/data"
+    string.format("%s/.knowledge/data", os.getenv("HOME"))
 }
 
 local function datafiles(root)

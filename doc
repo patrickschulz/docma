@@ -1,8 +1,5 @@
 #!/usr/bin/lua
 
--- only for development, not in 'production'
-package.path = "/home/pkurth/Workspace/knowledge/?.lua;" .. package.path
-
 -- penlight libraries
 local lapp      = require "pl.lapp"
 local pretty    = require "pl.pretty"
