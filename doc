@@ -5,20 +5,20 @@ local lapp      = require "pl.lapp"
 local pretty    = require "pl.pretty"
 
 -- local libraries
-local selection  = require "selection"
-local database   = require "database"
-local generation = require "generation"
-local load       = require "load"
-local configlib  = require "config"
-local loglib     = require "logger"
-local auxiliary  = require "auxiliary"
-local output     = require "output"
-local open       = require "open"
-local entry      = require "entry"
-local interface  = require "interface"
+local selection  = require "knowledge.selection"
+local database   = require "knowledge.database"
+local generation = require "knowledge.generation"
+local load       = require "knowledge.load"
+local configlib  = require "knowledge.config"
+local loglib     = require "knowledge.logger"
+local auxiliary  = require "knowledge.auxiliary"
+local output     = require "knowledge.output"
+local open       = require "knowledge.open"
+local entry      = require "knowledge.entry"
+local interface  = require "knowledge.interface"
 
 -- process commandline arguments
-local cmdargsstr = require "commandline_arguments"
+local cmdargsstr = require "knowledge.commandline_arguments"
 local args = lapp(cmdargsstr)
 
 -- set debug mode
