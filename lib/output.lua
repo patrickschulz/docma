@@ -4,7 +4,7 @@ local pl = {
     pretty = require "pl.pretty"
 }
 
-local util = require "util"
+local util = require "knowledge.util"
 
 local function create_citekey(document)
     local lastname = string.match(document.authors[1], "(%w+)$")

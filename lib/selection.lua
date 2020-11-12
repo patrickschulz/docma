@@ -1,6 +1,6 @@
 local M = {}
 
-local interface = require "interface"
+local interface = require "knowledge.interface"
 
 function M.choose(data)
     local result = {}

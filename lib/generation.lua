@@ -7,8 +7,8 @@ local pl = {
     utils   = require "pl.utils"
 }
 
-local input = require "input"
-local load  = require "load"
+local input = require "knowledge.input"
+local load  = require "knowledge.load"
 
 local write = true -- used for debugging
 

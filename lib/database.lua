@@ -1,6 +1,6 @@
 local M = {}
 
-local util = require "util"
+local util = require "knowledge.util"
 
 local function has_keyword(document, keyword)
     -- escape minus/dash (this is an active character in string.match)

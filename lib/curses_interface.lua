@@ -1,6 +1,5 @@
 local curses = require "curses"
-local color = require "color"
-local util = require "util"
+local util = require "knowledge.util"
 
 local M = {}
 
@@ -346,7 +345,6 @@ local function _show(data)
 end
 
 function M.enable_color(c)
-    color.use(c)
 end
 
 function M.show(data)

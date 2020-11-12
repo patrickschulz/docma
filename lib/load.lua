@@ -9,8 +9,8 @@ local pl = {
     list   = require "pl.List",
 }
 
-local util = require "util"
-local entry = require "entry"
+local util = require "knowledge.util"
+local entry = require "knowledge.entry"
 
 local databasepaths = {
     string.format("%s/.knowledge/data", os.getenv("HOME"))

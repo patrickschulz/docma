@@ -1,7 +1,7 @@
 local M = {}
 
-local input = require "input"
-local color = require "color"
+local input = require "knowledge.input"
+local color = require "knowledge.color"
 
 local function get_authors(authors)
     local c = "violet"

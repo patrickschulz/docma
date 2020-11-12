@@ -1,7 +1,7 @@
-local status, module = pcall(require, "curses_interface")
+local status, module = pcall(require, "knowledge.curses_interface")
 if status then
     return module
 end
 
 -- fallback solution
-return require "simple_interface"
+return require "knowledge.simple_interface"
