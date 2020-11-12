@@ -1,0 +1,2 @@
+- improve date system, this has to be done in several places. Implement this as one central module
+- implement print_entry templates for entry selection (e.g. so that one can specify which fields to print)

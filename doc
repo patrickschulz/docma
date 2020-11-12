@@ -1,0 +1,162 @@
+#!/usr/bin/lua
+
+-- only for development, not in 'production'
+package.path = "/home/pkurth/Workspace/knowledge/?.lua;" .. package.path
+
+-- penlight libraries
+local lapp      = require "pl.lapp"
+local pretty    = require "pl.pretty"
+
+-- local libraries
+local selection  = require "selection"
+local database   = require "database"
+local generation = require "generation"
+local load       = require "load"
+local configlib  = require "config"
+local loglib     = require "logger"
+local auxiliary  = require "auxiliary"
+local output     = require "output"
+local open       = require "open"
+local entry      = require "entry"
+local interface  = require "interface"
+
+-- process commandline arguments
+local cmdargsstr = require "commandline_arguments"
+local args = lapp(cmdargsstr)
+
+-- set debug mode
+generation.set_nowrite(args.nowrite)
+
+interface.enable_color(args.color == "on")
+interface.enable_color(false) -- FIXME: only temporarily
+
+-- debugger and logger (both global)
+debugger = loglib.create(args.debug)
+logger = loglib.create(args.verbose)
+
+-- configuration
+local config = configlib.load()
+debugger:log_table(config)
+
+if args["show_config"] then
+    configlib.print(config)
+    os.exit(0)
+end
+
+if args["check"] then
+    load.check_all("data.lua")
+    os.exit(0)
+end
+
+-- history info
+if args["show_last_search"] then
+    auxiliary.show_last_search(config)
+    os.exit(0)
+end
+if args["show_last_documents"] then
+    auxiliary.show_last_documents(config)
+    os.exit(0)
+end
+
+-- Simple generation mode
+if args.generate then
+    logger:log("simple generation mode")
+    if not arg[2] then
+        lapp.error("no pdf file given", true)
+    end
+    generation.interactive(arg[2])
+    os.exit(0)
+end
+
+-- Bibtex generation mode
+if args.bibtex then -- generate modus, exit after this
+    logger:log("bibTeX generation mode")
+    if not arg[2] then
+        lapp.error("no bibtex file given", true)
+    end
+    if not arg[3] then
+        lapp.error("no pdf file given", true)
+    end
+    generation.bibtex(arg[2], arg[3])
+    os.remove(arg[2])
+    os.exit(0)
+end
+
+-- read data
+local documents = load.read_data("data.lua", args.verbose, args["local"])
+
+if args["list_all"] then
+    print(entry.export_all(documents))
+    os.exit(0)
+end
+
+local grep = args.grep
+local combine = ((args.match == "or") and "or") or "and"
+local rating = args.rating
+local unread = args.unread
+
+local function search_and_open(search, num)
+    local search = search or database.parse_keys(args.keys, args.title, args.author, args.keyword, args.tag)
+    config.last_search = search
+    local results = database.search(documents, search, grep, rating, unread, combine, args.date)
+    if num then
+        return { results[num] }
+    else
+        return selection.choose(results, args.sort)
+    end
+end
+
+local selected
+if args["last_search"] then
+    logger:log("using last search")
+    local search = config.last_search
+    if not search then
+        lapp.error("no last search", true)
+    end
+    selected = search_and_open(search)
+elseif args.keys[1] == "" then -- if there is no key, open the last document
+    logger:log("last document mode")
+    if config.last_documents then
+        selected = config.last_documents
+    else
+        print("the last documents are unknown")
+        os.exit(1)
+    end
+elseif string.match(args.keys[1], "^%+%d+") then -- if there is only one key and it's of the form +num, use the last search to open the document
+    logger:log("last search numeric mode")
+    local search = config.last_search
+    local num = tonumber(args.keys[1])
+    selected = search_and_open(search, num)
+else
+    logger:log("regular search mode")
+    selected = search_and_open(nil)
+end
+
+if args["bibtex_entry"] then
+    output.print_bibtex(selected, "sources.bib")
+    os.exit(0)
+end
+
+if args["entry"] then
+    output.print_entry(selected)
+    os.exit(0)
+end
+
+if args["path"] then
+    auxiliary.show_path(selected)
+    os.exit(0)
+end
+
+if args["copy"] then
+    auxiliary.copy(selected)
+    os.exit(0)
+end
+
+open.set_viewer(config.viewer)
+open.open_documents(selected)
+
+-- save config
+config.last_documents = selected
+
+logger:log("writing config")
+configlib.save(config)
