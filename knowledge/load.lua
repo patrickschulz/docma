@@ -16,6 +16,21 @@ local databasepaths = {
     string.format("%s/.knowledge/data", os.getenv("HOME"))
 }
 
+local function datadirs(root)
+    local paths = {}
+    for root, dirs in pl.dir.walk(root) do
+        if #dirs == 0 then
+            table.insert(paths, root)
+        end
+    end
+    local index = 0
+    local it = function()
+        index = index + 1
+        return paths[index]
+    end
+    return it
+end
+
 local function datafiles(root)
     local files = pl.dir.getallfiles(root, "*/data.lua")
     local index = 0
@@ -119,6 +134,14 @@ function M.read_data(datafilename, verbose, onlylocal)
 end
 
 function M.check_all(datafilename)
+    for _, dbpath in ipairs(databasepaths) do
+        for root in datadirs(dbpath) do
+            local fullpath = string.format("%s/data.lua", root)
+            if not pl.path.exists(fullpath) then
+                print(string.format("leaf directory contains no data file: %s", root))
+            end
+        end
+    end
     for _, dbpath in ipairs(databasepaths) do
         for fullpath, root in datafiles(dbpath) do
             local status, data = pcall(load_datafile, fullpath)
