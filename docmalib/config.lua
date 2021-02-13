@@ -34,7 +34,7 @@ function M.save(t)
         last_documents = t.last_documents,
         last_search = t.last_search,
     }
-    local str = "return " .. pretty.write(t)
+    local str = "return " .. pretty.write(tosave)
     local file = io.open(docpath, "w")
     if not file then
         error("could not open config file for writing")
