@@ -30,6 +30,10 @@ function M.load()
 end
 
 function M.save(t)
+    local tosave = {
+        last_documents = t.last_documents,
+        last_search = t.last_search,
+    }
     local str = "return " .. pretty.write(t)
     local file = io.open(docpath, "w")
     if not file then
