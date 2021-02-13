@@ -1,5 +1,4 @@
 #!/usr/bin/lua
-package.path = "/home/pkurth/Workspace/knowledge/?.lua;/usr/share/lua/5.4/?.lua"
 
 -- penlight libraries
 local lapp      = require "pl.lapp"
