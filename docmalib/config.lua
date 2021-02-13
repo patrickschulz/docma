@@ -12,17 +12,16 @@ end
 
 function M.load()
     local ret = {}
-    -- general configuration
-    do
-        local status, config = pcall(dofile, path)
-        if status then
-            print("read config")
-            merge(ret, config)
-        end
-    end
     -- document configuration
     do
         local status, config = pcall(dofile, docpath)
+        if status then
+            merge(ret, config)
+        end
+    end
+    -- general configuration (overwrites docconfig)
+    do
+        local status, config = pcall(dofile, path)
         if status then
             merge(ret, config)
         end
