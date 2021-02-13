@@ -1,4 +1,5 @@
 #!/usr/bin/lua
+package.path = "/home/pkurth/Workspace/knowledge/?.lua;/usr/share/lua/5.4/?.lua"
 
 -- penlight libraries
 local lapp      = require "pl.lapp"
@@ -8,7 +9,6 @@ local pretty    = require "pl.pretty"
 local selection  = require "knowledge.selection"
 local database   = require "knowledge.database"
 local generation = require "knowledge.generation"
-local load       = require "knowledge.load"
 local configlib  = require "knowledge.config"
 local loglib     = require "knowledge.logger"
 local auxiliary  = require "knowledge.auxiliary"
@@ -40,8 +40,10 @@ if args["show_config"] then
     os.exit(0)
 end
 
+database.set_datafilename("data.lua")
+
 if args["check"] then
-    load.check_all("data.lua")
+    database.check()
     os.exit(0)
 end
 
@@ -80,7 +82,10 @@ if args.bibtex then -- generate modus, exit after this
 end
 
 -- read data
-local documents = load.read_data("data.lua", args.verbose, args["local"])
+if args["local"] then
+    database.set_local()
+end
+local documents = database.read_data(args.verbose)
 
 if args["list_all"] then
     print(entry.export_all(documents))
@@ -127,6 +132,19 @@ elseif string.match(args.keys[1], "^%+%d+") then -- if there is only one key and
 else
     logger:log("regular search mode")
     selected = search_and_open(nil)
+end
+
+if args["edit"] then
+    if #selected > 1 then
+        print("can edit only one document")
+        os.exit(0)
+    end
+    local editor = os.getenv("EDITOR")
+    local filename = os.tmpname()
+    database.write_datafile(selected, filename)
+    os.execute(string.format("%s %s", editor, filename))
+    local new = database.read_datafile(filename)
+    os.exit(0)
 end
 
 if args["bibtex_entry"] then

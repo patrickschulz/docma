@@ -36,6 +36,7 @@ History functions:
 Modification functions:
     --rate (default 3)            Rate the document                          (currently not implemented)
     --delete                      Remove the paper from index and it's file  (currently not implemented)
+    --edit                        Edit the entry in your favourite editor ($EDITOR)
 Generation functions:
     -G,--generate                 generate an entry (interactive)
     -B,--bibtex                   generate an entry from an bibtex file (two arguments needed: 1. bibtex file, 2. pdf filename)
