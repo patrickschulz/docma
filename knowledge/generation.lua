@@ -8,7 +8,7 @@ local pl = {
 }
 
 local input = require "knowledge.input"
-local load  = require "knowledge.load"
+local database  = require "knowledge.database"
 
 local write = true -- used for debugging
 
@@ -51,9 +51,9 @@ end
 
 local function update_datafile(entry)
     if write then
-        local data = load.read_datafile("data.lua")
+        local data = database.read_datafile("data.lua")
         table.insert(data, entry)
-        load.write_datafile(data, "data.lua")
+        database.write_datafile(data, "data.lua")
     end
 end
 
