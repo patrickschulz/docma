@@ -1,7 +1,7 @@
 local M = {}
 
 local pretty = require "pl.pretty"
-local path = string.format("%s/.knowledge/docconfig.lua", os.getenv("HOME"))
+local path = string.format("%s/.docma/docconfig.lua", os.getenv("HOME"))
 
 function M.load()
     local status, config = pcall(dofile, path)

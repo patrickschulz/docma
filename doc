@@ -5,19 +5,19 @@ local lapp      = require "pl.lapp"
 local pretty    = require "pl.pretty"
 
 -- local libraries
-local selection  = require "knowledge.selection"
-local database   = require "knowledge.database"
-local generation = require "knowledge.generation"
-local configlib  = require "knowledge.config"
-local loglib     = require "knowledge.logger"
-local auxiliary  = require "knowledge.auxiliary"
-local output     = require "knowledge.output"
-local open       = require "knowledge.open"
-local entry      = require "knowledge.entry"
-local interface  = require "knowledge.interface"
+local selection  = require "docmalib.selection"
+local database   = require "docmalib.database"
+local generation = require "docmalib.generation"
+local configlib  = require "docmalib.config"
+local loglib     = require "docmalib.logger"
+local auxiliary  = require "docmalib.auxiliary"
+local output     = require "docmalib.output"
+local open       = require "docmalib.open"
+local entry      = require "docmalib.entry"
+local interface  = require "docmalib.interface"
 
 -- process commandline arguments
-local cmdargsstr = require "knowledge.commandline_arguments"
+local cmdargsstr = require "docmalib.commandline_arguments"
 local args = lapp(cmdargsstr)
 
 -- set debug mode

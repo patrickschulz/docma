@@ -1,5 +1,5 @@
 local curses = require "curses"
-local util = require "knowledge.util"
+local util = require "docmalib.util"
 
 local M = {}
 

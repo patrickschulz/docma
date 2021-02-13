@@ -1,4 +1,4 @@
-# Document Manager
+# DocMa - A Document Manager
 This is a simple command-line document manager written in lua. It searches through a database for the authors, the title and the keywords of a document. Mutiple keywords can be combined by *and* (all
 keywords must match) or *or* (only one keyword must match). A *not* functionality is currently not implemented. Furthermore, the user can restrict the search to only the author, the title or the
 keywords.

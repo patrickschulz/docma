@@ -7,8 +7,8 @@ local pl = {
     utils   = require "pl.utils"
 }
 
-local input = require "knowledge.input"
-local database  = require "knowledge.database"
+local input = require "docmalib.input"
+local database  = require "docmalib.database"
 
 local write = true -- used for debugging
 

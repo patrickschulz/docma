@@ -1,6 +1,6 @@
 local M = {}
 
-local interface = require "knowledge.interface"
+local interface = require "docmalib.interface"
 
 function M.choose(data)
     local result = {}

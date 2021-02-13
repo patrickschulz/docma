@@ -5,7 +5,7 @@ local pl = {
     text = require "pl.text"
 }
 
-local util = require "knowledge.util"
+local util = require "docmalib.util"
 
 local function export_bibtex(entry)
     if not entry.bibtex then

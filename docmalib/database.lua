@@ -9,11 +9,11 @@ local pl = {
     list   = require "pl.List",
 }
 
-local util = require "knowledge.util"
-local entry = require "knowledge.entry"
+local util = require "docmalib.util"
+local entry = require "docmalib.entry"
 
 local databasepaths = {
-    string.format("%s/.knowledge/data", os.getenv("HOME"))
+    string.format("%s/.docma/data", os.getenv("HOME"))
 }
 local datafilename = "data.lua"
 
