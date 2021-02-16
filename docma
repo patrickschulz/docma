@@ -42,7 +42,7 @@ end
 database.set_datafilename("data.lua")
 
 if args["check"] then
-    database.check()
+    database.check_all()
     os.exit(0)
 end
 
