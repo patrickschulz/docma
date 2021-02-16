@@ -62,6 +62,7 @@ function M.set_nowrite(nowrite)
 end
 
 function M.interactive(path)
+    open.open_pdf(path)
     local title = input.get_string("Enter title: ")
     local authors = input.get_multiple_strings("Enter authors (one per line): ")
     local keywords = input.get_multiple_strings("Enter keywords (one per line): ")
