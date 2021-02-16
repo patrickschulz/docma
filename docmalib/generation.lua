@@ -9,6 +9,7 @@ local pl = {
 
 local input = require "docmalib.input"
 local database  = require "docmalib.database"
+local open = require "docmalib.open"
 
 local write = true -- used for debugging
 
