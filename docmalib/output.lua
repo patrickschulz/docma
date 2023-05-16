@@ -7,8 +7,13 @@ local pl = {
 local util = require "docmalib.util"
 
 local function create_citekey(document)
-    local lastname = string.match(document.authors[1], "(%w+)$")
     local year = document.bibtex.year
+    local lastname
+    if string.match(document.authors[1], ",") then -- lastname, surname
+        lastname = string.match(document.authors[1], "^(%w+),")
+    else
+        lastname = string.match(document.authors[1], "(%w+)$")
+    end
     return string.format("%s%s", string.lower(lastname), year)
 end
 
